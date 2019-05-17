@@ -24,8 +24,9 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
 COPY --from=sqlpackage ["C:\\Program Files\\Microsoft SQL Server\\140\\DAC", "C:\\Program Files\\Microsoft SQL Server\\140\\DAC"]
 
 ENV ACCEPT_EULA="Y" `
-    DATA_PATH="C:\database" `
-    sa_password="D0cker!a8s"
+    DATA_PATH="C:\database"  `
+    sa_password="D0cker!a8s" `
+	database_name="PXPTRXNL"
 
 VOLUME ${DATA_PATH}
 

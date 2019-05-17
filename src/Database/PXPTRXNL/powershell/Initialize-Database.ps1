@@ -2,14 +2,17 @@ param(
     [string] $sa_password = $env:sa_password,
     [string] $data_path = $env:data_path,
     [string] $TargetServerName = '.\SQLEXPRESS',
-    [string] $TargetDatabaseName = 'PXPTRXNL',
+    [string] $TargetDatabaseName = $env:database_name,
     [string] $TargetUser = 'sa',
     [string] $TargetPassword = $env:sa_password
 )
 $VerbosePreference = "Continue"
 
-Write-Verbose 'Before TargetDatabaseName Check'
+Write-Verbose "sa_password: $sa_password"
+Write-Verbose "data_path: $data_path"
 Write-Verbose "TargetServerName: $TargetServerName"
+Write-Verbose "TargetDatabaseName: $TargetDatabaseName"
+Write-Verbose "TargetUser: $TargetUser"
 
 if ($TargetServerName -eq '.\SQLEXPRESS') {
 

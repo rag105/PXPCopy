@@ -1,5 +1,5 @@
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see http://aka.ms/containercompat 
+#For more information, please see https://aka.ms/containercompat
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-nanoserver-1809 AS base
 WORKDIR /app
@@ -8,10 +8,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-nanoserver-1809 AS build
 WORKDIR /src
-COPY ["src/Web/WebMVC/WebMVC.csproj", "src/Web/WebMVC/"]
-RUN dotnet restore "src/Web/WebMVC/WebMVC.csproj"
+COPY ["Web/WebMVC/WebMVC.csproj", "Web/"]
+RUN dotnet restore "Web/WebMVC/WebMVC.csproj"
 COPY . .
-WORKDIR "/src/src/Web/WebMVC"
+WORKDIR "/src/WebMVC"
 RUN dotnet build "WebMVC.csproj" -c Release -o /app
 
 FROM build AS publish
