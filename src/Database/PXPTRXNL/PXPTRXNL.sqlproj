@@ -151,5 +151,6 @@
     <None Include="powershell\Initialize-Database.ps1" />
     <None Include="Dockerfile" />
     <None Include="README.md" />
+    <None Include="DockerEnvs.txt" />
   </ItemGroup>
 </Project>

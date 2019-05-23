@@ -1,14 +1,13 @@
 param(
     [string] $sa_password = $env:sa_password,
     [string] $data_path = $env:data_path,
-    [string] $TargetServerName = '.\SQLEXPRESS',
+    [string] $TargetServerName = $env:server_name,
     [string] $TargetDatabaseName = $env:database_name,
     [string] $TargetUser = 'sa',
     [string] $TargetPassword = $env:sa_password
 )
 $VerbosePreference = "Continue"
 
-Write-Verbose "sa_password: $sa_password"
 Write-Verbose "data_path: $data_path"
 Write-Verbose "TargetServerName: $TargetServerName"
 Write-Verbose "TargetDatabaseName: $TargetDatabaseName"
@@ -16,6 +15,7 @@ Write-Verbose "TargetUser: $TargetUser"
 
 if ($TargetServerName -eq '.\SQLEXPRESS') {
 
+	Write-Verbose "Creating Local: $TargetServerName"
     # start the service
     Write-Verbose 'Starting SQL Server'
     Start-Service MSSQL`$SQLEXPRESS
@@ -53,6 +53,7 @@ $SqlPackagePath = 'C:\Program Files\Microsoft SQL Server\140\DAC\bin\SqlPackage.
     /TargetUser:$TargetUser /TargetPassword:$TargetPassword 
 
 if ($TargetServerName -eq '.\SQLEXPRESS') {
+	Write-Verbose "Deploying to Local: $TargetServerName"
     $SqlCmdVars = "DatabaseName=$TargetDatabaseName", "DefaultFilePrefix=$TargetDatabaseName", "DefaultDataPath=$data_path\", "DefaultLogPath=$data_path\"  
     Invoke-Sqlcmd -InputFile deploy.sql -Variable $SqlCmdVars -Verbose
 
@@ -66,8 +67,10 @@ if ($TargetServerName -eq '.\SQLEXPRESS') {
     }
 }
 else {
+	Write-Verbose "Deploying to Remote: $TargetServerName"
     $SqlCmdVars = "DatabaseName=$TargetDatabaseName", "DefaultFilePrefix=$TargetDatabaseName", "DefaultDataPath=$data_path\", "DefaultLogPath=$data_path\"  
-    Invoke-Sqlcmd -ServerInstance $TargetServerName -Database $TargetDatabaseName -User $TargetUser -Password $TargetPassword -InputFile deploy.sql -Variable $SqlCmdVars -Verbose
+	Write-Verbose "SqlCmdVars: $SqlCmdVars"
+    Invoke-Sqlcmd -ServerInstance $TargetServerName -User $TargetUser -Password $TargetPassword -InputFile deploy.sql -Variable $SqlCmdVars -Verbose | Out-File -FilePath "C:\TestSqlCmd.rpt"
 
     Write-Verbose "Deployed PXPTRXNL database, data files at: $data_path"
 }

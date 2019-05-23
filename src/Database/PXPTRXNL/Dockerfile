@@ -26,7 +26,8 @@ COPY --from=sqlpackage ["C:\\Program Files\\Microsoft SQL Server\\140\\DAC", "C:
 ENV ACCEPT_EULA="Y" `
     DATA_PATH="C:\database"  `
     sa_password="D0cker!a8s" `
-	database_name="PXPTRXNL"
+	database_name="PXPTRXNL" `
+	server_name=".\SQLEXPRESS"
 
 VOLUME ${DATA_PATH}
 

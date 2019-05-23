@@ -1,1 +1,3 @@
-database_name=tranny
+# database_name=someotherdatabase
+server_name=136.142.111.122
+DATA_PATH=C:\PROGRA~1\MICROS~2\MSSQL1~1.MSS\MSSQL\DATA
