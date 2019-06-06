@@ -2,7 +2,9 @@
 FROM pxp-database/pxptrxnl-builder AS builder
 
 WORKDIR C:\src
-COPY .\ .
+COPY .\src\Database\PXPTRXNL\ .
+RUN pwd
+RUN ls
 RUN msbuild PXPTRXNL.sqlproj `
     /p:SQLDBExtensionsRefPath="C:\Microsoft.Data.Tools.Msbuild.10.0.61804.210\lib\net46" `
     /p:SqlServerRedistPath="C:\Microsoft.Data.Tools.Msbuild.10.0.61804.210\lib\net46"
@@ -32,7 +34,7 @@ ENV ACCEPT_EULA="Y" `
 VOLUME ${DATA_PATH}
 
 WORKDIR C:\init
-COPY .\powershell\Initialize-Database.ps1 .
+COPY .\src\Database\PXPTRXNL\powershell\Initialize-Database.ps1 .
 ENTRYPOINT ["powershell", "./Initialize-Database.ps1"]
 
 COPY --from=builder C:\src\bin\Debug\PXPTRXNL.dacpac .

@@ -1,8 +1,37 @@
 version: '3.4'
 
 services:
+  pxptrxnl:
+    image: pxp-database/pxptrxnl:v1
+    entrypoint: powershell ./Initialize-Database.ps1
+
+#  pxptrxnl:
+#    image: ${DOCKER_REGISTRY-}pxptrxnl
+#    build:
+#      context: .
+#      dockerfile: src\Database\PXPTRXNL\Dockerfile
+      
   webmvc:
     image: ${DOCKER_REGISTRY-}webmvc
+#    depends_on: 
+#      - ${DOCKER_REGISTRY-}pxptrxnl
     build:
       context: .
       dockerfile: src\Web\WebMVC\Dockerfile
+
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    depends_on:
+      - pxptrxnl
+    build:
+      context: .
+      dockerfile: src\Services\Identity\Identity.API\Dockerfile    
+
+
+#  pxptrxnlbuilder:
+#    image: ${DOCKER_REGISTRY-}pxptrxnlbuilder
+#    build:
+#      context: .
+#      dockerfile: src\Database\PXPTRXNL\Dockerfile.builder
+
+

@@ -5,7 +5,7 @@
     <DockerTargetOS>Windows</DockerTargetOS>
     <ProjectGuid>f0039510-7dc3-4b76-a9f9-dc050aab8c33</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}</DockerServiceUrl>
+    <DockerServiceUrl>https://localhost:44379</DockerServiceUrl>
     <DockerServiceName>webmvc</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
